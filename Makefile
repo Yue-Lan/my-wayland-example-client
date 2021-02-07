@@ -5,8 +5,8 @@ CFLAGS ?= -std=c11 -Wall -Wextra -Werror -Wno-unused-parameter -g
 
 XDG_SHELL_PROTOCOL = $(WAYLAND_PROTOCOLS_DIR)/stable/xdg-shell/xdg-shell.xml
 
-HEADERS=cat.h xdg-shell-client-protocol.h shm.h
-SOURCES=main.c xdg-shell-protocol.c shm.c
+HEADERS=cat.h xdg-shell-client-protocol.h shm.h ukui-decoration-client.h
+SOURCES=main.c xdg-shell-protocol.c shm.c ukui-decoration-core.c
 
 all: hello-wayland
 

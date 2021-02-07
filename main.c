@@ -11,6 +11,7 @@
 #include "cat.h"
 #include "shm.h"
 #include "xdg-shell-client-protocol.h"
+#include "ukui-decoration-client.h"
 
 static const int width = 128;
 static const int height = 128;
@@ -20,6 +21,7 @@ static bool running = true;
 static struct wl_shm *shm = NULL;
 static struct wl_compositor *compositor = NULL;
 static struct xdg_wm_base *xdg_wm_base = NULL;
+static struct ukui_decoration *ukui_decoration = NULL;
 
 static void *shm_data = NULL;
 static struct wl_surface *surface = NULL;
@@ -91,6 +93,8 @@ static void handle_global(void *data, struct wl_registry *registry,
 			&wl_compositor_interface, 1);
 	} else if (strcmp(interface, xdg_wm_base_interface.name) == 0) {
 		xdg_wm_base = wl_registry_bind(registry, name, &xdg_wm_base_interface, 1);
+	} else if (strcmp(interface, ukui_decoration_interface.name) == 0) {
+		ukui_decoration = wl_registry_bind(registry, name, &ukui_decoration_interface, 1);
 	}
 }
 
@@ -145,6 +149,12 @@ int main(int argc, char *argv[]) {
 	if (shm == NULL || compositor == NULL || xdg_wm_base == NULL) {
 		fprintf(stderr, "no wl_shm, wl_compositor or xdg_wm_base support\n");
 		return EXIT_FAILURE;
+	}
+
+	if (ukui_decoration == NULL) {
+		printf("no ukui decoration protocol support\n");
+	} else {
+		printf("support ukui decoration\n");
 	}
 
 	struct wl_buffer *buffer = create_buffer();
