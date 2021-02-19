@@ -167,6 +167,9 @@ int main(int argc, char *argv[]) {
 		xdg_wm_base_get_xdg_surface(xdg_wm_base, surface);
 	xdg_toplevel = xdg_surface_get_toplevel(xdg_surface);
 
+	ukui_decoration_register_surface(ukui_decoration, surface);
+	ukui_decoration_set_ukui_decoration_mode(ukui_decoration, surface, 1);
+
 	xdg_surface_add_listener(xdg_surface, &xdg_surface_listener, NULL);
 	xdg_toplevel_add_listener(xdg_toplevel, &xdg_toplevel_listener, NULL);
 
